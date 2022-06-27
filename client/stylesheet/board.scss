@@ -1,0 +1,15 @@
+$tile-size: 4.5vh;
+
+.board {
+  background-color: red;
+  margin: 5vh 10vw;
+  display: grid;
+  grid-template-columns: repeat(10, $tile-size);
+  grid-template-rows: repeat(20, $tile-size);
+
+  .tile {
+    border: 1px solid black;
+    height: $tile-size;
+    width: $tile-size;
+  }
+}
