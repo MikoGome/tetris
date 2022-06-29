@@ -8,8 +8,10 @@ module.exports = {
     path: path.resolve('build'),
     filename: 'bundle.js'
   },
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
+      
       filename: 'index.html',
       template: path.resolve('client', 'index.html')
     })

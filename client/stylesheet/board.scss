@@ -1,7 +1,7 @@
 $tile-size: 4.5vh;
 
 .board {
-  background-color: red;
+  background-color: rgb(77, 75, 75);
   margin: 5vh 10vw;
   display: grid;
   grid-template-columns: repeat(10, $tile-size);
@@ -11,5 +11,33 @@ $tile-size: 4.5vh;
     border: 1px solid black;
     height: $tile-size;
     width: $tile-size;
+  }
+  
+  .red {
+    background-color: red;
+  }
+
+  .skyblue {
+    background-color: skyblue;
+  }
+
+  .green {
+    background-color: green;
+  }
+
+  .yellow {
+    background-color: yellow;
+  }
+
+  .purple {
+    background-color: purple;
+  }
+
+  .orange {
+    background-color: orange;
+  }
+
+  .darkblue {
+    background-color: darkblue;
   }
 }
