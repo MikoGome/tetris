@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../stylesheet/board.scss';
 
-import {move} from '../gameLogic.js';
 //tetris 10 squares wide, 20 squares tall
 /*
 [
@@ -17,29 +16,24 @@ import {move} from '../gameLogic.js';
 
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
-const Board  = () => {
-  const squares = Array(20).fill().map((el, row) => Array(10).fill().map((el, col) => <div className="tile" key={"squares_" + row + col} id={row + letters[col]}>{row + letters[col]}</div>));
-  const [ piece, setPiece ] = useState([0, Math.floor(squares[0].length / 2)]); //position: [rowPos, colPos]
+const Board  = (props) => {
+  const {board, piece} = props;
 
-  document.body.onkeydown = e => {
-    move(e, piece, setPiece);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      
-      setPiece((prev) => {
-        if(prev[0] >= squares.length) return clearInterval(interval);
-        const [row, col] = prev;
-        document.querySelectorAll('.tile').forEach(el => {
-          el.classList.remove('red')
-        });
-        document.getElementById(row + letters[col]).classList.add('red');
-        return [prev[0] + 1, prev[1]]
-      });
-      
-    }, 1000);
-  }, []);
+  const squares = board
+    .map((row, rowIdx) => {
+      return row.map((col, colIdx) => {
+        let color = '';
+        if(board[rowIdx][colIdx] !== 'empty') color = board[rowIdx][colIdx];
+        return (
+          <div 
+            className={"tile " + board[rowIdx][colIdx]}
+            key={"squares_" + rowIdx + colIdx} 
+            id={rowIdx + letters[colIdx]}
+          >
+            {rowIdx + letters[colIdx]}
+          </div>)
+      })
+  });
   
   return (
     <div className="board">
