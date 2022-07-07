@@ -18,19 +18,25 @@ const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 
 const Board  = (props) => {
   const {board, piece} = props;
-
+  const {color, position} = piece;
+  
   const squares = board
     .map((row, rowIdx) => {
       return row.map((col, colIdx) => {
-        let color = '';
-        if(board[rowIdx][colIdx] !== 'empty') color = board[rowIdx][colIdx];
+        let colorClass = '';
+        if(board[rowIdx][colIdx] !== 'empty') colorClass = board[rowIdx][colIdx];
+        else {
+          position.forEach((el) => {
+            if(rowIdx === el.row && colIdx === el.col) colorClass = color;
+          })
+        }
+
         return (
           <div 
-            className={"tile " + board[rowIdx][colIdx]}
+            className={"tile " + colorClass}
             key={"squares_" + rowIdx + colIdx} 
             id={rowIdx + letters[colIdx]}
           >
-            {rowIdx + letters[colIdx]}
           </div>)
       })
   });
