@@ -37,7 +37,12 @@ export const move = (e, piece, setPiece, board, time) => {
       break;
 
     case 'ArrowUp':
-      console.log('up');
+      const rotated = piece.rotate(setPiece, board);
+      for(let i = 0; i < rotated.position.length; i++){
+        const {row, col} = rotated.position[i];
+        if(row < 0 || row >= 20 || col < 0 || col >= 10 || board[row][col] !== 'empty') return
+      }
+      setPiece(rotated);
       break;
 
     default:

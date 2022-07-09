@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {State, useEffect} from 'react';
 import '../stylesheet/board.scss';
 
 //tetris 10 squares wide, 20 squares tall
