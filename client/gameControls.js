@@ -1,4 +1,4 @@
-import { deepClone } from './helperFunctions.js';
+import {deepClone} from './helperFunctions.js';
 
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
 

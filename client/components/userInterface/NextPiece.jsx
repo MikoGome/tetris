@@ -1,10 +1,21 @@
 import React from 'react';
-import '../../stylesheet/nextPiece.scss';
 
 const NextPiece = () => {
   return (
     <div className = "next-piece">
-      Next Piece Box 
+      <p>Next - Piece</p>
+      <div className = "inner-next-piece">
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+        <div className = "tile"></div>
+      </div>
+     
+      
     </div>
   )
 }

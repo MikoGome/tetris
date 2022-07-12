@@ -8,18 +8,19 @@ import {deepClone} from '../helperFunctions.js';
 import genPiece from '../pieces.js';
 import {lift, move} from '../gameControls.js';
 
-const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-
 const App = () => {
   //create state for tetris board
   const squares = Array(20).fill().map((el, row) => Array(10).fill().map((el, col) => 'empty'));
   const [ board, setBoard ] = useState(squares); //all the set pieces
-  const [ piece, setPiece ] = useState(genPiece());
+  const [ piece, setPiece ] = useState({position:[]});
   const [ gameOver, setGameOver ] = useState(false);
+
+  const [ startOrReset, setStartOrReset ] = useState(false);
+  const gameTime = useRef(null);
 
   useEffect(() => {
     if(gameOver) alert('you suck')
-  }, [gameOver])
+  }, [gameOver]);
   /*
   position: [rowPos, colPos] ->
     {
@@ -39,69 +40,85 @@ const App = () => {
   };
   
   function gameLogic() {
-    setPiece((prev) => {
-      const { position, color } = prev; //piece
-      setBoard((prev) => {
-        const copy = deepClone(prev); //copy is board
-        let placed = false;
-        
-        for(let i = 0; i < position.length; i++){
-          const el = position[i];
-          const row = el.row;
-          const col = el.col;
-          if(row >= board.length - 1 || prev[row + 1][col] !== 'empty') { //placing the pieces
-            placed = true;
-            break;
-          }
-        }
-
-        if(placed) {
-          position.forEach((el) => {
+    gameTime.current = setTimeout(() => {
+      gameLogic();
+      setPiece((prev) => {
+        const { position, color } = prev; //piece
+        setBoard((prev) => {
+          const copy = deepClone(prev); //copy is board
+          let placed = false;
+          
+          for(let i = 0; i < position.length; i++){
+            const el = position[i];
             const row = el.row;
             const col = el.col;
-            if(copy[row][col] !== 'empty') setGameOver(true);
-            copy[row][col] = color;
-          })
-
-          const clearRows= [];
-          for(let row = 0; row < copy.length; row++){
-            let filled = true;
-            for(let col = 0; col < copy[row].length; col++){
-              if(copy[row][col] === 'empty') {
-                filled = false;
-                break;
-              } 
+            if(row >= board.length - 1 || prev[row + 1][col] !== 'empty') { //placing the pieces
+              placed = true;
+              break;
             }
-            if(filled) clearRows.push(row);
           }
-
-          clearRows.forEach(el => {
-            copy.splice(el, 1);
-            copy.unshift(Array(10).fill('empty'));
-          });
-
-          setPiece(genPiece());
-        }
-
+  
+          if(placed) {
+            position.forEach((el) => {
+              const row = el.row;
+              const col = el.col;
+              if(copy[row][col] !== 'empty') setGameOver(true);
+              copy[row][col] = color;
+            })
+  
+            const clearRows= [];
+            for(let row = 0; row < copy.length; row++){
+              let filled = true;
+              for(let col = 0; col < copy[row].length; col++){
+                if(copy[row][col] === 'empty') {
+                  filled = false;
+                  break;
+                } 
+              }
+              if(filled) clearRows.push(row);
+            }
+  
+            clearRows.forEach(el => {
+              copy.splice(el, 1);
+              copy.unshift(Array(10).fill('empty'));
+            });
+  
+            setPiece(genPiece());
+          }
+  
+          return copy;
+        });
+  
+        const copy = deepClone(prev);
+        copy.position.map((el) => {
+          el.row++;
+        });
         return copy;
       });
-
-      const copy = deepClone(prev);
-      copy.position.map((el) => {
-        el.row++;
-      })
-      return copy;
-    });
-    setTimeout(gameLogic, time.current);
+    }, time.current);
   }
 
-  useEffect(() => {
-    gameLogic();
-  }, []);
+  const gameStart = () => {
+    if(!startOrReset) {
+      setStartOrReset(!startOrReset);
+      setPiece(genPiece());
+      gameLogic();
+    } else {
+      setPiece({position:[]})
+      setBoard(squares);
+      setStartOrReset(!startOrReset);
+      clearTimeout(gameTime.current);
+    }
+  }
 
   return (
     <div className="app">
-      TETRIS
+      {
+        !startOrReset ? 
+        <button className = "start-button" onClick = {gameStart}>START</button>
+        :
+        <button className = "start-button" onClick = {gameStart}>RESET</button>
+      }
       <Board board={board} piece={piece}/>
       <UserInterface/>
     </div>

@@ -1,10 +1,15 @@
 import React from 'react';
-import '../../stylesheet/highScore.scss';
 
 const HighScore = () => {
   return (
     <div className = "high-score">
-      High Score Box
+      <p>high - score</p>
+      <div className = "inner-high-score">
+        <h1>9123431983</h1>
+        <h2>437148134</h2>
+        <h3>59123813</h3>
+      </div>
+      
     </div>
   )
 }

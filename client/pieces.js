@@ -6,9 +6,10 @@ const genPiece = () => {
   const pieces = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
   const randIdx = Math.floor(Math.random() * pieces.length);
   const piece = new Piece(pieces[randIdx]);
+  console.log(piece);
   return piece;
 }
-
+//piece
 function Piece(letter) {
   this.type = letter;
   this.angle = 0;
@@ -100,7 +101,6 @@ Piece.prototype.rotate = function(){
       } else if(rotatedAngle === 1) {
         copy.position = [{row: row, col: col}, {row: row - 1, col: col - 1}, {row: row, col: col - 1}, {row: row + 1, col: col}];
       }
-      
       break;
 
     case 'Z':
@@ -109,7 +109,6 @@ Piece.prototype.rotate = function(){
       } else if(rotatedAngle === 1) {
         copy.position = [{row: row, col: col}, {row: row + 1, col: col}, {row: row, col: col + 1}, {row: row - 1, col: col + 1}];
       }
-
       break;
       
     case 'T':
@@ -122,7 +121,6 @@ Piece.prototype.rotate = function(){
       } else if(rotatedAngle === 3) {
         copy.position = [{row: row, col: col}, {row: row - 1, col: col}, {row: row + 1, col: col}, {row: row, col: col - 1}];
       }
-      
       break;
   }
   return copy;

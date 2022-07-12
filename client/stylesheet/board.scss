@@ -1,4 +1,4 @@
-$tile-size: 4.5vh;
+@import './variables.scss';
 
 .board {
   background-color: rgb(77, 75, 75);
@@ -7,12 +7,6 @@ $tile-size: 4.5vh;
   grid-template-columns: repeat(10, $tile-size);
   grid-template-rows: repeat(20, $tile-size);
 
-  .tile {
-    border: 1px solid black;
-    height: $tile-size;
-    width: $tile-size;
-  }
-  
   .red {
     background-color: red;
   }

@@ -1,10 +1,14 @@
-import React from 'react';
-import '../../stylesheet/currentScore.scss';
+import React, {useState} from 'react';
 
 const CurrentScore = () => {
+
   return (
     <div className = "current-score">
-      Current Score Box
+      <p>current - score</p>
+      <div className = "inner-current-score">
+        123985178951
+      </div>
+      
     </div>
   )
 }

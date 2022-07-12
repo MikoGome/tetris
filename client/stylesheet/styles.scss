@@ -1,12 +1,28 @@
+@import './variables.scss';
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+// sakura tree https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d34a59be-b3d6-4b35-a43b-66b0685de866/da69811-0383c935-4a67-4728-809a-08879cd25cf9.png/v1/fill/w_1000,h_500,q_80,strp/_maplestory_background__the_scent_of_blossom_by_bboki_da69811-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTAwIiwicGF0aCI6IlwvZlwvZDM0YTU5YmUtYjNkNi00YjM1LWE0M2ItNjZiMDY4NWRlODY2XC9kYTY5ODExLTAzODNjOTM1LTRhNjctNDcyOC04MDlhLTA4ODc5Y2QyNWNmOS5wbmciLCJ3aWR0aCI6Ijw9MTAwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.0ZDVRaqSMuXdnzs9b8kqijwMvKmmTeMV0YZjCIEdhew
+body {
+  background-image: url($background);
+  background-size: cover;
+}
 
 .app {
   display: flex;
   justify-content: center;
-  background-color: green;
-  
 }
+
+.start-button {
+  margin-top: 15vh;
+  height: 10vh;
+}
+
+.tile {
+  border: 1px solid black;
+  height: $tile-size;
+  width: $tile-size;
+}  
