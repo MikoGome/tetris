@@ -1,13 +1,16 @@
 import React from 'react';
 
-const HighScore = () => {
+const HighScore = (props) => {
+  const { highScore } = props;
   return (
     <div className = "high-score">
       <p>high - score</p>
       <div className = "inner-high-score">
-        <h1>9123431983</h1>
-        <h2>437148134</h2>
-        <h3>59123813</h3>
+        {
+          highScore.map((el, idx) => {
+            return <h1>{idx + 1}. {el}</h1>
+          })
+        }
       </div>
       
     </div>

@@ -46,7 +46,7 @@ const Board  = (props) => {
           </div>)
       })
   });
-  
+
   return (
     <div className="board">
       {squares}

@@ -33,7 +33,7 @@ export const move = (e, piece, setPiece, board, time) => {
       break;
 
     case 'ArrowDown':
-      time.current = 50;
+      time.current.active = time.current.save / 10;
       break;
 
     case 'ArrowUp':
@@ -53,7 +53,7 @@ export const move = (e, piece, setPiece, board, time) => {
 export const lift = (e, time) => {
   switch(e.key) {
     case 'ArrowDown':
-      time.current = 500;
+      time.current.active = time.current.save;
       break;
 
     default:

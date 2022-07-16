@@ -17,7 +17,7 @@
     width:20vw;
     justify-content: space-around;
     align-items: center;
-    background-color: Orange;
+    background-color: grey;
     border: 1px solid black;
 
     .inner-next-piece {
@@ -26,7 +26,7 @@
       grid-template-rows: repeat(2, $tile-size);
       margin-bottom: 30px;
       justify-content: center;
-      border: 1px solid orange;
+      border: 1px solid grey;
     }
   }
   

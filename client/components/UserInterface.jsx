@@ -5,12 +5,14 @@ import NextPiece from "./userInterface/NextPiece.jsx";
 import CurrentScore from "./userInterface/CurrentScore.jsx";
 import HighScore from "./userInterface/HighScore.jsx";
 
-const UserInterface = () => {
+const UserInterface = (props) => {
+  const { newPiece, score, highScore } = props;
+
   return (
     <div className="user-interface">
-      <NextPiece />
-      <CurrentScore />
-      <HighScore />
+      <NextPiece newPiece={newPiece}/>
+      <CurrentScore score={score}/>
+      <HighScore highScore={highScore}/>
     </div>
   )
 }

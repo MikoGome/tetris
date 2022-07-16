@@ -14,13 +14,30 @@ const App = () => {
   const [ board, setBoard ] = useState(squares); //all the set pieces
   const [ piece, setPiece ] = useState({position:[]});
   const [ gameOver, setGameOver ] = useState(false);
+  const [ newPiece, setNewPiece ] = useState({position:[]});
 
   const [ startOrReset, setStartOrReset ] = useState(false);
+  const [ score, setScore ] = useState(0);
+  const [ highScore, setHighScore ] = useState(!localStorage.getItem('highScores') ? [0,0,0] : JSON.parse(localStorage.getItem('highScores'))); 
+
+  const [ music, setMusic ] = useState(false);   
+
   const gameTime = useRef(null);
 
   useEffect(() => {
+    if(!gameOver) return;
     if(gameOver) alert('you suck')
+    console.log('score', score)
+    const copyHighScore = highScore.concat(score).sort((a,b) => b - a);
+    copyHighScore.pop();
+    setScore(0);
+    setHighScore(copyHighScore);
+    localStorage.setItem('highScores', JSON.stringify(copyHighScore));
+    setStartOrReset(false);
+    setGameOver(false);
+    gameStart();
   }, [gameOver]);
+
   /*
   position: [rowPos, colPos] ->
     {
@@ -29,7 +46,7 @@ const App = () => {
     }
   */
   
-  const time = useRef(500);
+  const time = useRef({});
   
   document.onkeydown = e => {
     move(e, piece, setPiece, board, time);
@@ -77,13 +94,25 @@ const App = () => {
               }
               if(filled) clearRows.push(row);
             }
-  
+            
+            let rowClearCount = 0;
             clearRows.forEach(el => {
               copy.splice(el, 1);
               copy.unshift(Array(10).fill('empty'));
+              rowClearCount++;
+              time.current.save -= 10;
+              time.current.active = time.current.save;
             });
-  
-            setPiece(genPiece());
+
+            setScore((prev) => {
+              return prev + ((rowClearCount * 2)  * 215243)
+            });
+            
+            //transfering our current newPiece to big Board
+            setNewPiece((prev) => {
+              setPiece(genPiece('big', prev.type));
+              return genPiece('small')
+            }); //generating a random newPiece
           }
   
           return copy;
@@ -95,15 +124,25 @@ const App = () => {
         });
         return copy;
       });
-    }, time.current);
+    }, time.current.active);
   }
 
   const gameStart = () => {
-    if(!startOrReset) {
+    if(!startOrReset) { 
       setStartOrReset(!startOrReset);
-      setPiece(genPiece());
+      setPiece(genPiece('big'));
+      setNewPiece(genPiece('small'));
+      time.current.save = 500;
+      time.current.active = time.current.save;
       gameLogic();
+      if(music) return;
+      const bgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3');
+      bgm.volume = 0.25;
+      bgm.loop = true;
+      bgm.play();
+      setMusic(true);
     } else {
+      setNewPiece({position:[]});
       setPiece({position:[]})
       setBoard(squares);
       setStartOrReset(!startOrReset);
@@ -120,7 +159,7 @@ const App = () => {
         <button className = "start-button" onClick = {gameStart}>RESET</button>
       }
       <Board board={board} piece={piece}/>
-      <UserInterface/>
+      <UserInterface newPiece={newPiece} score={score} highScore={highScore}/>
     </div>
   )
 }
