@@ -1,32 +1,82 @@
 @import './variables.scss';
 
 .user-interface {
-  font-family: 'Oswald';
-  display:grid;
+  font-family: 'Ibarra Real Nova';
+  display: grid;
   justify-content: center;
   padding-top: 35px;
   margin-top: 60px;
-  background-color: blue;
   width: 20%;
   height: 80vh;
+
+  color: rgb(61, 61, 61);
+  
+  .outer-square {
+    border: 1px solid rgba(253, 252, 252, 0.5);
+    outline: 1px solid rgba(94, 94, 94, 0.596);
+    background-image: linear-gradient(rgba(104, 102, 102, 0.486) 0%, rgba(26, 26, 26, 0.918) 20%);
+    padding: 0 10px 10px 10px;
+  }
+  
+  .content-border {
+    display: flex;
+    justify-content: flex-start;
+    border: 2px solid lightgrey;
+    width: 100%;
+    border-radius: 12px;
+    
+    .green-header {
+      background-image: linear-gradient(#cdf325, #8fbc28);
+      border-radius: 9px 0 0 9px;
+      padding: 5px;
+      font-size: 1rem;
+      justify-content: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      text-shadow: 0px 0px 1px rgb(51, 51, 51);
+      width: 25%;
+    }
+
+    .value {
+      margin-left: 10px;
+    }
+  }
+
+  .inner-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+  }
+
+  h4 {
+    color: rgb(255, 243, 80);
+    margin: 3px;
+  }
 
   .next-piece {
     display: flex;
     flex-direction: column;
     height:20vh;
     width:20vw;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    background-color: grey;
-    border: 1px solid black;
+    border-radius: 15px;
 
     .inner-next-piece {
       display: grid;
       grid-template-columns: repeat(4, $tile-size);
       grid-template-rows: repeat(2, $tile-size);
-      margin-bottom: 30px;
       justify-content: center;
-      border: 1px solid grey;
+    }
+
+    .gray-tile {
+      border-color: lightgray;
     }
   }
   
@@ -36,17 +86,10 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: skyblue;
-    border: 1px solid black;
-
+    border-radius: 15px;
+    
     .inner-current-score {
-      display: flex;
-      
-      height: 5vh;
-      width: 5vw;
-      margin-bottom: 30px;
-      justify-content: center;
-      border: 1px solid black;
+      width: 100%;
     }
   }
 
@@ -55,16 +98,15 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: pink;
-    border: 1px solid black;
+    border-radius: 15px;
 
     .inner-high-score {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      margin-bottom: 30px;
-      justify-content: center;
-      border: 1px solid black;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      height: 100%;
+      width: 100%;
     }
   }
 }

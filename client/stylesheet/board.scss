@@ -1,7 +1,7 @@
 @import './variables.scss';
 
 .board {
-  background-color: rgba(37, 36, 48, 0.25);
+  background-color: rgba(37, 36, 48, 0.4);
   margin: 5vh 10vw;
   display: grid;
   grid-template-columns: repeat(10, $tile-size);

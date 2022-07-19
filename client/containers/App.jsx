@@ -19,10 +19,21 @@ const App = () => {
   const [ startOrReset, setStartOrReset ] = useState(false);
   const [ score, setScore ] = useState(0);
   const [ highScore, setHighScore ] = useState(!localStorage.getItem('highScores') ? [0,0,0] : JSON.parse(localStorage.getItem('highScores'))); 
+  const [ music, setMusic ] = useState(false);
 
-  const [ music, setMusic ] = useState(false);   
-
+  const bgm = useRef(new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3'));
   const gameTime = useRef(null);
+  
+  useEffect(() => {
+    if(music) { 
+      bgm.current.load();
+      bgm.current.volume = 0.25;
+      bgm.current.loop = true;
+      bgm.current.play();
+    } else {
+      bgm.current.pause();
+    }
+  }, [music]);
 
   useEffect(() => {
     if(!gameOver) return;
@@ -135,11 +146,6 @@ const App = () => {
       time.current.save = 500;
       time.current.active = time.current.save;
       gameLogic();
-      if(music) return;
-      const bgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3');
-      bgm.volume = 0.25;
-      bgm.loop = true;
-      bgm.play();
       setMusic(true);
     } else {
       setNewPiece({position:[]});
@@ -147,6 +153,7 @@ const App = () => {
       setBoard(squares);
       setStartOrReset(!startOrReset);
       clearTimeout(gameTime.current);
+      setMusic(false);
     }
   }
 
@@ -154,9 +161,9 @@ const App = () => {
     <div className="app">
       {
         !startOrReset ? 
-        <button className = "start-button" onClick = {gameStart}>START</button>
+        <button className = "button" onClick = {gameStart}>Start</button>
         :
-        <button className = "start-button" onClick = {gameStart}>RESET</button>
+        <button className = "button" onClick = {gameStart}>Reset</button>
       }
       <Board board={board} piece={piece}/>
       <UserInterface newPiece={newPiece} score={score} highScore={highScore}/>

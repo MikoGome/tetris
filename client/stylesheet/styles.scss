@@ -11,21 +11,29 @@ body {
   background-size: cover;
 }
 
+.button {
+  font-family: Rubik;
+  width: 10rem;
+  height: 5rem;
+  margin-top: 15vh;
+  font-size: 50px;
+  border-radius: 10px;
+  background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b61037ca-08b4-4304-9787-fe07003195cc/d35p31p-9cbcc4e9-f53e-45a7-ab9d-d05205bccb50.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2I2MTAzN2NhLTA4YjQtNDMwNC05Nzg3LWZlMDcwMDMxOTVjY1wvZDM1cDMxcC05Y2JjYzRlOS1mNTNlLTQ1YTctYWI5ZC1kMDUyMDViY2NiNTAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.A-lK_m8EAkhuIDrwxOeRxgiAZQz9RpSxQqjp5GzyYlA');
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .app {
   display: flex;
   justify-content: center;
-}
-
-.start-button {
-  margin-top: 15vh;
-  height: 10vh;
 }
 
 .tile {
   border: 1px solid black;
   height: $tile-size;
   width: $tile-size;
-}  
+}
 
 //colors
 

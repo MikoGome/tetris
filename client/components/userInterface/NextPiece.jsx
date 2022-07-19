@@ -18,19 +18,21 @@ const NextPiece = (props) => {
       let color = '';
       for(let i = 0; i < newPiece.position.length; i++) {
         if(newPiece.position[i].row === rowIdx && newPiece.position[i].col === colIdx) {
-          color = newPiece.color;
+          color = 'tile '+ newPiece.color;
           break;
         }
       }
-      return <div className={'tile ' + color}></div>;
+      return <div className={color}></div>;
     }); 
    });
 
   return (
-    <div className = "next-piece">
-      <p>Next - Piece</p>
-      <div className = "inner-next-piece">
-        {randomNextPiece}
+    <div className = "next-piece outer-square">
+      <h4>Next Piece</h4>
+      <div className = "inner-square">
+        <div className = "inner-next-piece">
+          {randomNextPiece}
+        </div>
       </div>
     </div>
   )
