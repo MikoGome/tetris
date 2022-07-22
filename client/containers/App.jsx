@@ -2,12 +2,16 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import Board from '../components/Board.jsx';
 import UserInterface from '../components/UserInterface.jsx';
+import GameOver from '../components/GameOver.jsx'
 
 import '../stylesheet/styles.scss';
 import {deepClone} from '../helperFunctions.js';
 import genPiece from '../pieces.js';
 import {lift, move} from '../gameControls.js';
-
+//gameover
+//https://res.cloudinary.com/dpaazksht/video/upload/v1658529027/MapleStory_BGM_PlayPark-Asiasoft__getmp3.pro_dug4x5.mp3
+//jump
+//https://res.cloudinary.com/dpaazksht/video/upload/v1658528964/Maplestory_jump_sfx__getmp3.pro_oonvnc.mp3
 const App = () => {
   //create state for tetris board
   const squares = Array(20).fill().map((el, row) => Array(10).fill().map((el, col) => 'empty'));
@@ -16,7 +20,7 @@ const App = () => {
   const [ gameOver, setGameOver ] = useState(false);
   const [ newPiece, setNewPiece ] = useState({position:[]});
 
-  const [ startOrReset, setStartOrReset ] = useState(false);
+  const [ start, setStart ] = useState(false);
   const [ score, setScore ] = useState(0);
   const [ highScore, setHighScore ] = useState(!localStorage.getItem('highScores') ? [0,0,0] : JSON.parse(localStorage.getItem('highScores'))); 
   const [ music, setMusic ] = useState(false);
@@ -37,26 +41,34 @@ const App = () => {
 
   useEffect(() => {
     if(!gameOver) return;
-    if(gameOver) alert('you suck')
-    console.log('score', score)
+    setMusic(false);
+    const gameOverBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658529027/MapleStory_BGM_PlayPark-Asiasoft__getmp3.pro_dug4x5.mp3');
+    gameOverBgm.volume = 0.10;
+    gameOverBgm.play();
+
+    clearTimeout(gameTime.current);
     const copyHighScore = highScore.concat(score).sort((a,b) => b - a);
     copyHighScore.pop();
-    setScore(0);
     setHighScore(copyHighScore);
     localStorage.setItem('highScores', JSON.stringify(copyHighScore));
-    setStartOrReset(false);
-    setGameOver(false);
-    gameStart();
   }, [gameOver]);
 
-  /*
-  position: [rowPos, colPos] ->
-    {
-      color: color (ex. 'skyblue'),
-      position: [{row: 0, col: 0}, {row: 0, col: 1}, {row: 0, col: 2}, {row: 0, col: 3}]
-    }
-  */
   
+  function tryAgain() {
+    setScore(0);
+    setGameOver(false);
+    setStart(false);
+    gameStart(false);
+    gameStart(true);
+  }
+
+  function exit() {
+    setScore(0);
+    setGameOver(false);
+    setStart(true);
+    gameStart(false);
+  }
+
   const time = useRef({});
   
   document.onkeydown = e => {
@@ -82,6 +94,9 @@ const App = () => {
             const col = el.col;
             if(row >= board.length - 1 || prev[row + 1][col] !== 'empty') { //placing the pieces
               placed = true;
+              const landBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531353/DropItem_onknhr.mp3');
+              landBgm.volume = .15;
+              landBgm.play();
               break;
             }
           }
@@ -105,7 +120,7 @@ const App = () => {
               }
               if(filled) clearRows.push(row);
             }
-            
+      
             let rowClearCount = 0;
             clearRows.forEach(el => {
               copy.splice(el, 1);
@@ -114,7 +129,7 @@ const App = () => {
               time.current.save -= 10;
               time.current.active = time.current.save;
             });
-
+            if(clearRows.length) new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531239/DarkSight_g6rnak.mp3').play(); //clear sfx
             setScore((prev) => {
               return prev + ((rowClearCount * 2)  * 215243)
             });
@@ -122,7 +137,7 @@ const App = () => {
             //transfering our current newPiece to big Board
             setNewPiece((prev) => {
               setPiece(genPiece('big', prev.type));
-              return genPiece('small')
+              return genPiece('small');
             }); //generating a random newPiece
           }
   
@@ -138,35 +153,40 @@ const App = () => {
     }, time.current.active);
   }
 
-  const gameStart = () => {
-    if(!startOrReset) { 
-      setStartOrReset(!startOrReset);
+  const gameStart = (bool) => {
+    clearTimeout(gameTime.current);
+    setNewPiece({position:[]});
+    setPiece({position:[]})
+    setBoard(squares);
+    setStart(!start);
+    setScore(0);
+    setMusic(false);
+
+    if(bool) { 
       setPiece(genPiece('big'));
       setNewPiece(genPiece('small'));
       time.current.save = 500;
       time.current.active = time.current.save;
       gameLogic();
       setMusic(true);
-    } else {
-      setNewPiece({position:[]});
-      setPiece({position:[]})
-      setBoard(squares);
-      setStartOrReset(!startOrReset);
-      clearTimeout(gameTime.current);
-      setMusic(false);
     }
   }
 
   return (
     <div className="app">
       {
-        !startOrReset ? 
-        <button className = "button" onClick = {gameStart}>Start</button>
+        !start ? 
+        <button className = "button" onClick = {() => gameStart(true)}>Start</button>
         :
-        <button className = "button" onClick = {gameStart}>Reset</button>
+        <button className = "button" onClick = {() => gameStart(false)}>Reset</button>
       }
       <Board board={board} piece={piece}/>
       <UserInterface newPiece={newPiece} score={score} highScore={highScore}/>
+      {
+        gameOver ? 
+        <GameOver tryAgain={tryAgain} exit={exit} score={score}/>:
+        null
+      }
     </div>
   )
 }

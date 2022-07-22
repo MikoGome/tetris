@@ -10,9 +10,9 @@ const HighScore = (props) => {
           {
             highScore.map((el, idx) => {
               return (
-                <div className = "content-border">
-                  <h1 className = "green-header">{idx + 1}</h1> 
-                  <h1 className = "value">{el}</h1>
+                <div key={'highscore_'+idx} className = "content-border">
+                  <h1 key={'highscore_green_'+idx} className = "green-header">{idx + 1}</h1> 
+                  <h1 key={'highscore_value_'+idx} className = "value">{el}</h1>
                 </div>
               )
             })

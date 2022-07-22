@@ -37,11 +37,13 @@ export const move = (e, piece, setPiece, board, time) => {
       break;
 
     case 'ArrowUp':
+      
       const rotated = piece.rotate(setPiece, board);
       for(let i = 0; i < rotated.position.length; i++){
         const {row, col} = rotated.position[i];
         if(row < 0 || row >= 20 || col < 0 || col >= 10 || board[row][col] !== 'empty') return
       }
+      new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658528964/Maplestory_jump_sfx__getmp3.pro_oonvnc.mp3').play();
       setPiece(rotated);
       break;
 
