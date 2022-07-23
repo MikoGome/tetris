@@ -23,28 +23,28 @@ const App = () => {
   const [ start, setStart ] = useState(false);
   const [ score, setScore ] = useState(0);
   const [ highScore, setHighScore ] = useState(!localStorage.getItem('highScores') ? [0,0,0] : JSON.parse(localStorage.getItem('highScores'))); 
-  const [ music, setMusic ] = useState(false);
+  // const [ music, setMusic ] = useState(false);
 
-  const bgm = useRef(new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3'));
+  // const bgm = useRef(new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3'));
   const gameTime = useRef(null);
   
-  useEffect(() => {
-    if(music) { 
-      bgm.current.load();
-      bgm.current.volume = 0.25;
-      bgm.current.loop = true;
-      bgm.current.play();
-    } else {
-      bgm.current.pause();
-    }
-  }, [music]);
+  // useEffect(() => {
+  //   if(music) { 
+  //     bgm.current.load();
+  //     bgm.current.volume = 0.25;
+  //     bgm.current.loop = true;
+  //     bgm.current.play();
+  //   } else {
+  //     bgm.current.pause();
+  //   }
+  // }, [music]);
 
   useEffect(() => {
     if(!gameOver) return;
-    setMusic(false);
-    const gameOverBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658529027/MapleStory_BGM_PlayPark-Asiasoft__getmp3.pro_dug4x5.mp3');
-    gameOverBgm.volume = 0.10;
-    gameOverBgm.play();
+    // setMusic(false);
+    // const gameOverBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658529027/MapleStory_BGM_PlayPark-Asiasoft__getmp3.pro_dug4x5.mp3');
+    // gameOverBgm.volume = 0.10;
+    // gameOverBgm.play();
 
     clearTimeout(gameTime.current);
     const copyHighScore = highScore.concat(score).sort((a,b) => b - a);
@@ -94,9 +94,9 @@ const App = () => {
             const col = el.col;
             if(row >= board.length - 1 || prev[row + 1][col] !== 'empty') { //placing the pieces
               placed = true;
-              const landBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531353/DropItem_onknhr.mp3');
-              landBgm.volume = .15;
-              landBgm.play();
+              // const landBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531353/DropItem_onknhr.mp3');
+              // landBgm.volume = .15;
+              // landBgm.play();
               break;
             }
           }
@@ -129,7 +129,7 @@ const App = () => {
               time.current.save -= 10;
               time.current.active = time.current.save;
             });
-            if(clearRows.length) new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531239/DarkSight_g6rnak.mp3').play(); //clear sfx
+            // if(clearRows.length) new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531239/DarkSight_g6rnak.mp3').play(); //clear sfx
             setScore((prev) => {
               return prev + ((rowClearCount * 2)  * 215243)
             });
@@ -160,7 +160,7 @@ const App = () => {
     setBoard(squares);
     setStart(!start);
     setScore(0);
-    setMusic(false);
+    // setMusic(false);
 
     if(bool) { 
       setPiece(genPiece('big'));
@@ -168,7 +168,7 @@ const App = () => {
       time.current.save = 500;
       time.current.active = time.current.save;
       gameLogic();
-      setMusic(true);
+      // setMusic(true);
     }
   }
 
