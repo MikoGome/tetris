@@ -25,7 +25,7 @@ const App = () => {
   const [ highScore, setHighScore ] = useState(!localStorage.getItem('highScores') ? [0,0,0] : JSON.parse(localStorage.getItem('highScores'))); 
   // const [ music, setMusic ] = useState(false);
 
-  // const bgm = useRef(new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3'));
+  const bgm = useRef(new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1657933696/maple_gxqh4s.mp3'));
   const gameTime = useRef(null);
   
   // useEffect(() => {
@@ -94,9 +94,9 @@ const App = () => {
             const col = el.col;
             if(row >= board.length - 1 || prev[row + 1][col] !== 'empty') { //placing the pieces
               placed = true;
-              // const landBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531353/DropItem_onknhr.mp3');
-              // landBgm.volume = .15;
-              // landBgm.play();
+              const landBgm = new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531353/DropItem_onknhr.mp3');
+              landBgm.volume = .15;
+              landBgm.play();
               break;
             }
           }
@@ -129,7 +129,7 @@ const App = () => {
               time.current.save -= 10;
               time.current.active = time.current.save;
             });
-            // if(clearRows.length) new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531239/DarkSight_g6rnak.mp3').play(); //clear sfx
+            if(clearRows.length) new Audio('https://res.cloudinary.com/dpaazksht/video/upload/v1658531239/DarkSight_g6rnak.mp3').play(); //clear sfx
             setScore((prev) => {
               return prev + ((rowClearCount * 2)  * 215243)
             });
